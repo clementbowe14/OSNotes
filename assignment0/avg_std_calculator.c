@@ -1,22 +1,25 @@
 #include <math.h>
 #include <stdlib.h>
-
+#include <stdio.h>
 
 double calculateAverageWithIntegers(int list[], int size) {
-    int sum = 0;
+    double sum = 0;
     for(int i = 0; i < size; i++) {
         sum += list[i];
     }
+
+    // printf("%f\n", sum/size);
 
     return sum/size;
 }
 
 
 double calculateAverage(double list[], int size) {
-    int sum = 0;
+    double sum = 0;
     for(int i = 0; i < size; i++) {
         sum += list[i];
     }
+    // printf("%f\n", sum);
 
     return sum/size;
 }
