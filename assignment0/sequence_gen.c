@@ -1,6 +1,6 @@
 /**
  * @file sequence_gen.c
- * @author Clement Bowe(you@domain.com)
+ * @author Clement Bowe
  * @brief File to generate sequences for each of the sets
  * @version 0.1
  * @date 2022-05-27
@@ -17,39 +17,51 @@
 
 
 
-
-// void initializeRandomSeed() {
-//     srand(time(NULL));
-// }
-
-void createUniformlyDistributedList(int list[], int size, int min, int max){
+void createUniformlyDistributedList(int list[], int size, double min, double max){
   srand(time(NULL));
-  for(int i = 0; i < size; i++) {
-    list[i] = min + (max-min)*frand();
+    for(int i = 0; i < size; i++) {
+    list[i] = 0;
   }
+  for(int i = 0; i < size; i++) {
+    int range = (max-min);
+    list[i] = (frand() * range) + min;
+
+  }
+ 
 }
 
 
 void createNormallyDistributedList(double list[], int size, double mu, double sigma){
   srand(time(NULL));
   for(int i = 0; i < size; i++) {
-    list[i] = nrand()*(sigma + mu);
+    list[i] = 0;
   }
+  for(int i = 0; i < size; i++) {
+    list[i] = (nrand()*sigma) + mu;
+    }
+
 }
 
 
 
 void createNormallyRandomDistributedList(double list[], int size, double mu, double sigma, double min, double max){
   srand(time(NULL));
+    for(int i = 0; i < size; i++) {
+    list[i] = 0;
+  }
    for(int i = 0; i < size; i++) {
      list[i] = min-1;
      while(list[i] < min || list[i] > max)
-         list[i] = nrand()*sigma + mu;
+         list[i] = (nrand()*sigma) + mu;
    }
+
 }
 
 void createDivideRandomDistAndNormalDist(double resultList[], double normalDist[], double normalTrunc[], int size){
-    srand(time(NULL));
+  srand(time(NULL));
+  for(int i = 0; i < size; i++) {
+      resultList[i] = 0;
+    }
   for(int i = 0; i < size; i++) {
     resultList[i] = normalDist[i]/normalTrunc[i];
   }
@@ -57,9 +69,13 @@ void createDivideRandomDistAndNormalDist(double resultList[], double normalDist[
 
 // I had no idea what to call this
 void createSpecialDistributionSequence(double resultList[], int uniform[], double normalDist[], double normalTrunc[], int size) {
-    srand(time(NULL));
+  srand(time(NULL));
+  for(int i = 0; i < size; i++) {
+    resultList[i] = 0;
+  }
   for(int i = 0; i < size; i++){
     resultList[i] = 4*uniform[i] - (5* normalDist[i]) + (2 * normalTrunc[i]);
   }
+  
 }
 
