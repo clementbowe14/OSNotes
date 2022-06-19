@@ -1,6 +1,7 @@
+#include "process.h"
+
 #include <stdio.h>
 #include <stdlib.h>
-#include <process.h>
 #include <limits.h>
 
 typedef struct node {
@@ -17,10 +18,12 @@ typedef struct node {
 
 
 ProcessQueue createProcessQueue(){
+    printf("creating process queue");
     ProcessQueue queue;
     queue.size = 0;
     queue.head = queue.tail = (node*)malloc(sizeof(node));
     //dummy node
+    queue.head -> value = (ProcessNode*)malloc(sizeof(ProcessNode));
     createNode(queue.head -> value, INT_MIN, -1, -1,-1, -1, -1, -1);
     queue.head -> next = NULL;
     return queue;
@@ -47,7 +50,9 @@ ProcessNode* dequeue(ProcessQueue* queue) {
 void enqueue(ProcessQueue* queue, ProcessNode* item){
     queue -> tail -> next = (node*)malloc(sizeof(node));
     queue -> tail -> next -> next = NULL;
+    queue -> tail -> next -> value = (ProcessNode*)malloc(sizeof(ProcessNode));
     queue -> tail -> next -> value = item;
+    queue -> tail = queue -> tail -> next;
     queue -> size++;
 }
 

@@ -1,4 +1,4 @@
- typedef struct ProcessNode {
+typedef struct ProcessNode  {
     int pid;
     int arrivalTime; //
     int priorityLevel;
@@ -7,7 +7,7 @@
     int isActive;  // active = 1 new or terminated = 0
     int processState; // terminated = 0 new = 1 active = 2
     struct ProcessNode* next;
-} ProcessNode;
+ } ProcessNode;
 
 void createNode(ProcessNode* p, int id, int aTime, int pLevel, int cpu, int rem, int act, int state);
 void activateProcess(ProcessNode * p);

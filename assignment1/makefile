@@ -1,8 +1,8 @@
 CC=gcc
 BINARY=bin
 INCDIRS=-I.
-CFILES=main.c  process.c srtheap.c utils.c
-OBJECTS=main.o process.o srtheap.o utils.o
+CFILES=main.c  process.c process_queue.c srtheap.c utils.c
+OBJECTS=main.o process.o process_queue.c srtheap.o utils.o
 OPT=-O0
 TXT=data.txt
 CFLAGS=-WALL -Wextra -g $(INCDIRS) $(OPT)
