@@ -1,4 +1,3 @@
-#include <process.h>
 
 typedef struct node {
     struct node * next;

@@ -1,6 +1,7 @@
+#include "process.h"
+
 #include <stdio.h>
 #include <stdlib.h>
-#include <process.h>
 
 typedef struct {
     struct ProcessNode** data;

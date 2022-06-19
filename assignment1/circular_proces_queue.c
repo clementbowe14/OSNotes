@@ -1,6 +1,7 @@
+#include "process.h"
+
 #include <stdio.h>
 #include <stdlib.h>
-#include "process.h"
 #include <limits.h>
 
 typedef struct CircularProcessQueue {
