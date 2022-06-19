@@ -1,42 +1,52 @@
 
 #include <stdlib.h>
 
-struct ProcessNode {
+typedef struct ProcessNode {
     int pid;
     int arrivalTime; //
     int priorityLevel;
     int totalCpuTime;
     int remainingTime;
     int isActive;  // active = 1 new or terminated = 0
-    int processState; // terminated = 0 new = 1 active = 2
-    struct ProcessNode * next;
-};
+    int processState; // terminated = -1 new = 0 active = 1
+    struct ProcessNode* next;
+}ProcessNode;
 
-struct ProcessNode createProcess(int id, int aTime, int pLevel, int cpu, int rem, int act, int state, struct ProcessNode * next) {
-    struct ProcessNode p;
-    p.pid = id;
-    p.arrivalTime = aTime;
-    p.priorityLevel = pLevel;
-    p.totalCpuTime = cpu;
-    p.remainingTime = rem;
-    p.isActive = act;
-    p.processState = state;
-    p.next = next;
 
-    return p;
+//create nodes that do not need to be linked
+void createNode(ProcessNode* p, int id, int aTime, int pLevel, int cpu, int rem, int act, int state){
+    p -> pid = id;
+    p -> arrivalTime = aTime;
+    p -> priorityLevel = pLevel;
+    p -> totalCpuTime = cpu;
+    p -> remainingTime = rem;
+    p -> isActive = act;
+    p -> processState = state;
 }
 
-void activateProcess(struct ProcessNode * p) {
+void activateProcess(ProcessNode * p) {
     if(p != NULL)
        p -> isActive = 1;
 }
 
-void deactivateProcess(struct ProcessNode * p) {
+void deactivateProcess(ProcessNode * p) {
     if(p != NULL)
     p -> isActive = 0;
 }
 
-void lowerPriority(struct ProcessNode *p) {
+void terminateProcessState(ProcessNode *p) {
+    p -> processState = -1;
+}
+
+void newProcessState(ProcessNode *p) {
+    p -> processState = 0;
+}
+
+void readyProcessState(ProcessNode *p) {
+    p -> processState = 1;
+}
+
+void lowerPriority(ProcessNode *p) {
     if(p != NULL)
         p ->priorityLevel--;
 }
@@ -46,9 +56,11 @@ void decrementCPUTime(struct ProcessNode *p) {
         p -> remainingTime--;
 }
 
-int isFinished(struct ProcessNode *p) {
+
+int isFinished(ProcessNode *p) {
     if(p -> remainingTime == 0)
         return 1;
+
     return 0;
 }
 

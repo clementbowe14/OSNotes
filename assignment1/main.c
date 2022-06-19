@@ -1,34 +1,11 @@
-#include <math.h>
 #include <stdlib.h>
-#include <time.h>
 #include <stdio.h>
-#define frand() (rand()/(double)RAND_MAX)
-#define nrand() (sqrt(-2*log(frand()))*cos(2*M_PI*frand()))
-
-void createUniformlyDistributedList(int list[], int size, double min, double max){
-  srand(time(NULL));
-    for(int i = 0; i < size; i++) {
-    list[i] = 0;
-  }
-  for(int i = 0; i < size; i++) {
-    int range = (max-min);
-    list[i] = (frand() * range) + min;
-
-  }
- 
-}
+#include <process.h>
+#include <srtheap.h>
+#include <utils.h>
 
 
-void createNormallyDistributedList(double list[], int size, double mu, double sigma){
-  srand(time(NULL));
-  for(int i = 0; i < size; i++) {
-    list[i] = 0;
-  }
-  for(int i = 0; i < size; i++) {
-    list[i] = (nrand()*sigma) + mu;
-    }
 
-}
 int main(int argc, char *argv[]) {
 
     printf("number of args, %d\n", argc);
@@ -38,11 +15,28 @@ int main(int argc, char *argv[]) {
     int v = atoi(argv[4]);
 
     printf("n%d\nk%d\n d %d\n v %d\n", n, k, d, v);
-    int * totalCPUTimes = malloc(n * sizeof(int));
-    createUniformlyDistributedList(totalCPUTimes, n, d, v);
-
-    for(int i = 0; i < n; i++) {
-        printf("Total CPU time of process %d is: %d \n", i, totalCPUTimes[i]);
-    }
+    int * totalCPUTimes = malloc(n * sizeof(double));
+    int * arrivalTimes = malloc(n * sizeof(int));
+    ProcessNode* nodes = malloc(n * sizeof(struct ProcessNode));
     
+    //uniform distribution of arrival times
+    createUniformlyDistributedList(arrivalTimes, n, 0, k);
+
+    //normal distribution of total cpu time
+    createNormallyDistributedList(totalCPUTimes, n, d, v);
+
+    printf("created cpu times times for the processes%s\n", "");
+    for(int i = 0; i < n; i++) {
+        createNode(&nodes[i], i, arrivalTimes[i], 0, totalCPUTimes[i], totalCPUTimes[i], 1, 1);
+    }
+    printf("created process data structures %s\n", "");
+    
+    sortProcesses(nodes, n);
+
+    printf("adding nodes to process queue");
+    for(int i = 0; i < n; i++){
+
+    }
+
+
 }
