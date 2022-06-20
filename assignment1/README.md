@@ -1,10 +1,10 @@
-#Homework Assignment #2
+# Homework Assignment #2
 
-Team Members
+## Team Members
 Vincent Ledesma PID: 3020421
 Clement Bowe PID: 5442372
 
-## No. of meetings 2.
+## Meetings
 
 Meeting 1 log:
 
@@ -23,11 +23,11 @@ Agenda � Strategizing and setting up our project starter files as well as assi
 
 Assigned Task List:
 
-Create a functioning getopt to pass in number of process (-n), time interval (-k), and mean of total CPU times (-d) � Vincent Ledesma
-Create a random function to derive arrival times and uniformly distribute numbers as well as use gaussian distribution� Clement Bowe
-Implement FIFO - Vincent Ledesma
-Implement SRT - Clement Bowe
-Implement SJF � Clement Bowe
-Create scheduler for round robin � Clement Bowe
-Plot algorithms d/ATT over d values � Vincent Ledesma
+- [ ] Create a functioning getopt to pass in number of process (-n), time interval (-k), and mean of total CPU times (-d) � Vincent Ledesma
+- [ ] Create a random function to derive arrival times and uniformly distribute numbers as well as use gaussian distr
+- [ ] Implement FIFO - Vincent Ledesma
+- [ ] Implement SRT - Clement Bowe
+- [ ] Implement SJF � Clement Bowe
+- [ ] Create scheduler for round robin � Clement Bowe
+- [ ] Plot algorithms d/ATT over d values � Vincent Ledesma
 
