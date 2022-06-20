@@ -13,13 +13,13 @@ Meeting date 06/11/2022
 
 Agenda � Strategizing and setting up our project starter files as well as assign tasks.
 
-16:30 - Meeting Begins
-16:32 � download of git for all members
-16:35 � Review of assignment parameters on a bullet point by bullet point basis
-17:00 � Review of provided code and explaining what each portion should be doing
-17:46 � cleared up issue with makefile being Linux specific
-18:00 � assigned tasks based off people�s strengths
-18:02 � called the meeting for dinner.
+- 16:30 - Meeting Begins
+- 16:32 � download of git for all members
+- 16:35 � Review of assignment parameters on a bullet point by bullet point basis
+- 17:00 � Review of provided code and explaining what each portion should be doing
+- 17:46 � cleared up issue with makefile being Linux specific
+- 18:00 � assigned tasks based off people�s strengths
+- 18:02 � called the meeting for dinner.
 
 Assigned Task List:
 
