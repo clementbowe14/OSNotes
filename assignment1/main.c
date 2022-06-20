@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <process.h>
-#include <srtheap.h>
-#include <utils.h>
+#include "process.h"
+#include "srtheap.h"
+#include "utils.h"
 
 
 
