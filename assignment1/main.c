@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <time.h>
 #include <stdio.h>
+#include <unistd.h>
+#include <string.h>
+
 #define frand() (rand()/(double)RAND_MAX)
 #define nrand() (sqrt(-2*log(frand()))*cos(2*M_PI*frand()))
 
@@ -37,12 +40,11 @@ int main(int argc, char *argv[]) {
     int d = atoi(argv[3]);
     int v = atoi(argv[4]);
 
-    printf("n%d\nk%d\n d %d\n v %d\n", n, k, d, v);
-    int * totalCPUTimes = malloc(n * sizeof(int));
-    createUniformlyDistributedList(totalCPUTimes, n, d, v);
+    printf("n = %d\nk = %d\nd = %d\nv = %d\n", n, k, d, v);
+    double * totalCPUTimes = malloc(n * sizeof(double));
+    createNormallyDistributedList(totalCPUTimes, n, d, v);
 
     for(int i = 0; i < n; i++) {
-        printf("Total CPU time of process %d is: %d \n", i, totalCPUTimes[i]);
+        printf("Total CPU time of process %d is: %.2lf \n", i, totalCPUTimes[i]);
     }
-    
 }
