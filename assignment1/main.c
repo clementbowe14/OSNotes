@@ -3,7 +3,7 @@
 #include "process.h"
 #include "srtheap.h"
 #include "utils.h"
-
+#include "process_queue.h"
 
 
 int main(int argc, char *argv[]) {
@@ -18,7 +18,10 @@ int main(int argc, char *argv[]) {
     int * totalCPUTimes = malloc(n * sizeof(double));
     int * arrivalTimes = malloc(n * sizeof(int));
     ProcessNode* nodes = malloc(n * sizeof(struct ProcessNode));
-    
+    ProcessQueue newNodes = createProcessQueue();
+    ProcessQueue terminatedNodes = createProcessQueue();
+    heap scheduler = create_heap(n);
+
     //uniform distribution of arrival times
     createUniformlyDistributedList(arrivalTimes, n, 0, k);
 
@@ -33,10 +36,39 @@ int main(int argc, char *argv[]) {
     
     sortProcesses(nodes, n);
 
-    printf("adding nodes to process queue");
+    printf("adding nodes to newNode queue\n");
     for(int i = 0; i < n; i++){
-
+        enqueue(&newNodes, &nodes[i]);
     }
+
+    int time = 0;
+    int i = n;
+
+    while(terminatedNodes.size < n){
+    
+    if(scheduler.size > 0){
+        ProcessNode* node = peek(&scheduler);
+        node -> remainingTime--;
+        if(node -> remainingTime == 0){
+            enqueue(&terminatedNodes, delete(&scheduler));
+        }
+    }
+
+        while(isEmpty(newNodes) == 0 && front(&newNodes)->arrivalTime <= time){
+            min_insert(&scheduler, dequeue(&newNodes));
+            terminatedNodes.size++;
+        }
+
+        if(newNodes.size > 0){
+            printQueue(newNodes);
+        }
+
+        if(terminatedNodes.size > 0){
+            printQueue(terminatedNodes);
+        }
+        time++;
+    }
+
 
 
 }

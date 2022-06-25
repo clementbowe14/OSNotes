@@ -31,7 +31,10 @@ ProcessQueue createProcessQueue(){
 
 
 int isEmpty(ProcessQueue queue) {
-    return (queue.size == 0);
+    if(queue.size > 0){
+        return 0;
+    }
+    return 1;
 }
 
 ProcessNode* dequeue(ProcessQueue* queue) {
@@ -40,6 +43,7 @@ ProcessNode* dequeue(ProcessQueue* queue) {
     queue -> head -> next = deleted -> next;
     queue -> size--;
     if(queue -> tail == deleted)
+        printf("We have reached the tail");
         queue -> tail = queue -> head;
 
     free(deleted);
