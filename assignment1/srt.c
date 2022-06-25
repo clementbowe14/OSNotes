@@ -1,13 +1,13 @@
 #include"pa1.h"
 #include <math.h>
 #include <time.h>
-#include "sjfheap.h"
+#include "srtheap.h"
 
 #define frand() (rand()/(double)RAND_MAX)
 #define nrand() (sqrt(-2*log(frand()))*cos(2*M_PI*frand()))
 
-sjfheap generate_arrival_times(int n, int k){
-  sjfheap h = create_heap(n);
+srtheap generate_arrival_times(int n, int k){
+  srtheap h = create_heap(n);
   for(int i = 0; i < n;i++)
     min_insert(&h, frand()*k);
   return h;
@@ -32,9 +32,9 @@ int main(int argc, char** argv) {
   double v = d/4.0;
   //CLA Handling
   printf("CLA Handling!\n");
-  sjfheap arrival_times = generate_arrival_times(n,k);
+  srtheap arrival_times = generate_arrival_times(n,k);
   printf("# of processes: %d first 20 arrive times:\n", arrival_times.size);
-  sjfheap copy = clone(arrival_times);
+  srtheap copy = clone(arrival_times);
   for(int i = 0; i < 20;i++)
     printf("%d\t", min_delete(&copy));
   putchar('\n');
@@ -70,17 +70,15 @@ int main(int argc, char** argv) {
     }
     t++;
   }
-  printf("SJF Algorithm for (n,k)=(%d,%d): ATT= %.3f, d= %d, d/ATT= %.3f\n", n, k, att/n, d, d*n/att);
+  printf("SRT Algorithm for (n,k)=(%d,%d): ATT= %.3f, d= %d, d/ATT= %.3f\n", n, k, att/n, d, d*n/att);
 
-  FILE *fp = fopen("SJF.csv","r");
-
-  FILE *fp = fopen("SJF.csv","r");
+  FILE *fp = fopen("SRT.csv","r");
 
   if (fp != NULL) {
-    fp = fopen("SJF.csv", "a");
+    fp = fopen("SRT.csv", "a");
     fprintf(fp,"%d, %.3f\n", d, d*n/att);
   } else {
-    fp = fopen("SJF.csv", "a");
+    fp = fopen("SRT.csv", "a");
     fprintf(fp,"d, d/ATT\n");
     fprintf(fp,"%d, %.3f\n", d, d*n/att);
   }

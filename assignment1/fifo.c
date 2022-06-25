@@ -68,10 +68,16 @@ int main(int argc, char** argv) {
   }
   printf("FIFO Algorithm for (n,k)=(%d,%d): ATT= %.3f, d= %d, d/ATT= %.3f\n", n, k, att/n, d, d*n/att);
 
-  FILE *fp;
-  fp = fopen("FIFO.csv", "a");
-  fprintf(fp,"d, d/ATT\n");
-  fprintf(fp,"%d, %.3f\n", d, d*n/att);
+  FILE *fp = fopen("FIFO.csv","r");
+
+  if (fp != NULL) {
+    fp = fopen("FIFO.csv", "a");
+    fprintf(fp,"%d, %.3f\n", d, d*n/att);
+  } else {
+    fp = fopen("FIFO.csv", "a");
+    fprintf(fp,"d, d/ATT\n");
+    fprintf(fp,"%d, %.3f\n", d, d*n/att);
+  }
   fclose(fp);
 
   return 0;
