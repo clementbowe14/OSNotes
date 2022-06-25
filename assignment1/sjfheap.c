@@ -7,10 +7,10 @@ typedef struct {
     struct ProcessNode** data;
     int size;
     unsigned capacity;
-} srtheap;
+} sjfheap;
 
-srtheap create_heap(unsigned capacity){
-    srtheap h;
+sjfheap create_heap(unsigned capacity){
+    sjfheap h;
     h.data = malloc((1+capacity) * sizeof(struct ProcessNode*));
     h.size = 0;
     h.capacity = capacity;
@@ -19,20 +19,20 @@ srtheap create_heap(unsigned capacity){
     return h;
 }
 
-int is_empty(srtheap h){
+int is_empty(sjfheap h){
     return h.size == 0;
 }
 
-int is_full(srtheap h){
+int is_full(sjfheap h){
     return h.size == h.capacity;
 }
 
-struct ProcessNode *peek(srtheap *h) {
+struct ProcessNode *peek(sjfheap *h) {
     return h -> data[1];
 }
 
 
-void min_percolate_down(srtheap h, int index) {
+void min_percolate_down(sjfheap h, int index) {
     while(1) {
         int left_child = index << 1;
         int right_child = left_child + 1;
@@ -40,11 +40,11 @@ void min_percolate_down(srtheap h, int index) {
         struct ProcessNode* left = h.data[left_child];
         struct ProcessNode* right = h.data[right_child];
         
-        if(left_child <= h.size && left ->remainingTime < h.data[min] ->remainingTime){
+        if(left_child <= h.size && left ->totalCpuTime < h.data[min] ->totalCpuTime){
             min = left_child;
         }
 
-        if(right_child <= h.size && right -> remainingTime < h.data[min] -> remainingTime){
+        if(right_child <= h.size && right -> totalCpuTime < h.data[min] -> totalCpuTime){
             min = right_child;
         }
 
@@ -59,7 +59,7 @@ void min_percolate_down(srtheap h, int index) {
     }
 }
 
-struct ProcessNode* delete(srtheap *h) {
+struct ProcessNode* delete(sjfheap *h) {
     struct ProcessNode* res = h -> data[1];
     printf("%d process has been deleted from the queue\n", res ->pid);
     h -> data[1] = h -> data[h -> size--];
@@ -68,7 +68,7 @@ struct ProcessNode* delete(srtheap *h) {
 }
 
 
-void min_insert(srtheap *h, struct ProcessNode* node){
+void min_insert(sjfheap *h, struct ProcessNode* node){
     if(h -> size == h -> capacity){
         return;
     }
@@ -79,7 +79,7 @@ void min_insert(srtheap *h, struct ProcessNode* node){
 
    while(index != 1){
        int parent = index >> 1;
-       if(h -> data[parent] -> remainingTime < h -> data[index] -> remainingTime){
+       if(h -> data[parent] -> totalCpuTime < h -> data[index] -> totalCpuTime){
            return;
        }
        struct ProcessNode* temp = h ->data[parent];
@@ -89,12 +89,12 @@ void min_insert(srtheap *h, struct ProcessNode* node){
    }
 }
 
-void printSrtHeap(srtheap h) {
+void printSrtHeap(sjfheap h) {
     for(int i = 1; i < h.size; i++){
         printf("pid: %d, arrival time: %d, cpu_time: %d", h.data[i]->pid, h.data[i]->arrivalTime, h.data[i] ->totalCpuTime);
     }
 }
 
-void addWaitingTime(srtheap* h) {
+void addWaitingTime(sjfheap* h) {
     
 }

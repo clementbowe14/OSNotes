@@ -11,13 +11,13 @@ int main(int argc, char **argv)
     int nflag = 0, kflag = 0, dflag = 0, oflag = 0;
     int numProcess = 0, timeInterval = 0, CPUTimes = 0;
     char *oname = "Default_File";
-    static char usage[] = "Usage: main [-n number of processes][-k time interval a process may arrive][-d mean total CPU time][-o output_file_name][input_file_name]\n";
+    static char usage[] = "Usage: getopt [-n number of processes][-k time interval a process may arrive][-d mean total CPU time][-o output_file_name][input_file_name]\n";
 
     while ((c = getopt(argc, argv, "n:k:d:o:")) != -1)
       switch (c)
       {
         case 'n': // number of processes
-		    nflag = 1;
+		        nflag = 1;
             numProcess = atoi(optarg);
             break;
         case 'k': // the time interval during which processes may arrive
