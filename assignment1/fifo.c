@@ -1,6 +1,5 @@
 #include <math.h>
 #include <time.h>
-
 #define frand() (rand()/(double)RAND_MAX)
 #define nrand() (sqrt(-2*log(frand()))*cos(2*M_PI*frand()))
 heap generate_arrival_times(int n, int k){
@@ -59,7 +58,7 @@ int main(int argc, char** argv) {
       current->remaining_time--;
       if(current->remaining_time == 0){
         current->tt = (t+1) - current->arrival_time;//termination-arrival
-        printf("t=%d: a process with arraival time %d and bt %d got terminated with TT = %d\n", t+1, current->arrival_time, current->burst_time, current->tt);
+        printf("t=%d: a process with arrival time %d and bt %d got terminated with TT = %d\n", t+1, current->arrival_time, current->burst_time, current->tt);
         att += current->tt;        
         free(current);
         current = NULL;
@@ -68,5 +67,12 @@ int main(int argc, char** argv) {
     t++;
   }
   printf("FIFO Algorithm for (n,k)=(%d,%d): ATT= %.3f, d= %d, d/ATT= %.3f\n", n, k, att/n, d, d*n/att);
+
+  FILE *fp;
+  fp = fopen("FIFO.csv", "a");
+  fprintf("d, d/ATT\n");
+  fprintf("%d, %.3f\n", d, d*n/att);
+  fclose(fp);
+
   return 0;
 }
