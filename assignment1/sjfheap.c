@@ -89,7 +89,7 @@ void min_insert(sjfheap *h, struct ProcessNode* node){
    }
 }
 
-void printSrtHeap(sjfheap h) {
+void printSjfHeap(sjfheap h) {
     for(int i = 1; i < h.size; i++){
         printf("pid: %d, arrival time: %d, cpu_time: %d", h.data[i]->pid, h.data[i]->arrivalTime, h.data[i] ->totalCpuTime);
     }

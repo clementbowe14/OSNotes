@@ -70,8 +70,8 @@ int main(int argc, char** argv) {
 
   FILE *fp;
   fp = fopen("FIFO.csv", "a");
-  fprintf("d, d/ATT\n");
-  fprintf("%d, %.3f\n", d, d*n/att);
+  fprintf(fp,"d, d/ATT\n");
+  fprintf(fp,"%d, %.3f\n", d, d*n/att);
   fclose(fp);
 
   return 0;
