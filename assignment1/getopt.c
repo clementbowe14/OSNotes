@@ -8,12 +8,12 @@ int main(int argc, char **argv)
     extern char *optarg;
     extern int optind;
     int c, err = 0;
-    int nflag = 0, kflag = 0, dflag = 0, vflag = 0, oflag = 0;
-    int numProcess = 0, timeInterval = 0, CPUTimes = 0, stdDev = 0;
+    int nflag = 0, kflag = 0, dflag = 0, oflag = 0;
+    int numProcess = 0, timeInterval = 0, CPUTimes = 0;
     char *oname = "Default_File";
-    static char usage[] = "Usage: main [-n number of processes][-k time interval a process may arrive][-d mean total CPU time][-v standard deviation][-o output_file_name][input_file_name]\n";
+    static char usage[] = "Usage: main [-n number of processes][-k time interval a process may arrive][-d mean total CPU time][-o output_file_name][input_file_name]\n";
 
-    while ((c = getopt(argc, argv, "n:k:d:v:o:")) != -1)
+    while ((c = getopt(argc, argv, "n:k:d:o:")) != -1)
       switch (c)
       {
         case 'n': // number of processes
@@ -28,10 +28,6 @@ int main(int argc, char **argv)
             dflag = 1;
             CPUTimes = atoi(optarg);
             break;
-        case 'v': // The standard deviation of CPU times 
-            vflag = 1;
-            stdDev = atoi(optarg);
-            break;    
         case 'o': // an output file was chosen
             oflag = 1;
             oname = optarg; // name of the file
@@ -41,8 +37,8 @@ int main(int argc, char **argv)
             exit(1); // end the program
             break;
 	    } // end of switch
-    printf("nflag=%d; kflag=%d; dflag=%d; vflag=%d; oflag=%d\n", nflag, kflag, dflag, vflag, oflag);
-    printf("numProcess=%d; timeInterval=%d; CPUTimes=%d; stdDev=%d; oname=%s\n", numProcess, timeInterval, CPUTimes, stdDev, oname);
+    printf("nflag=%d; kflag=%d; dflag=%d; oflag=%d\n", nflag, kflag, dflag, oflag);
+    printf("numProcess=%d; timeInterval=%d; CPUTimes=%d; oname=%s\n", numProcess, timeInterval, CPUTimes, oname);
 
     if (optind >= argc) 
     {
