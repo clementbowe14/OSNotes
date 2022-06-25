@@ -89,3 +89,12 @@ void min_insert(heap *h, struct ProcessNode* node){
    }
 }
 
+void printSrtHeap(heap h) {
+    for(int i = 1; i < h.size; i++){
+        printf("pid: %d, arrival time: %d, cpu_time: %d", h.data[i]->pid, h.data[i]->arrivalTime, h.data[i] ->totalCpuTime);
+    }
+}
+
+void addWaitingTime(heap* h) {
+    
+}
