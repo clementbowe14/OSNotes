@@ -1,7 +1,7 @@
 CC=gcc
 BINARY=bin
 INCDIRS=-I.
-CFILES=main.c  process.c process_queue.c srtheap.c utils.c
+CFILES=main.c  process.c process_queue.c srtheap.c utils.c 
 OBJECTS=main.o process.o process_queue.c srtheap.o utils.o
 OPT=-O0
 TXT=data.txt
@@ -18,4 +18,4 @@ $(BINARY): $(OBJECTS)
 	$(CC) $(CFLAGS) -c -o $@ $^
 
 clean:
-	rm - rf $(BINARY) $(OBJECTS) $(TXT) $(CSV)
+	rm - rf $(BINARY) $(OBJECTS)
