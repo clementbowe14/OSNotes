@@ -1,7 +1,14 @@
 #include <math.h>
 #include <time.h>
-#include "utils.h"
 
+#define frand() (rand()/(double)RAND_MAX)
+#define nrand() (sqrt(-2*log(frand()))*cos(2*M_PI*frand()))
+heap generate_arrival_times(int n, int k){
+  heap h = create_heap(n);
+  for(int i = 0; i < n;i++)
+    min_insert(&h, frand()*k);
+  return h;
+}
 
 int main(int argc, char** argv) {
    srand(time(NULL));
@@ -19,11 +26,9 @@ int main(int argc, char** argv) {
       continue;
   }
   double v = d/4.0;
-  
   //CLA Handling
   printf("CLA Handling!\n");
   heap arrival_times = generate_arrival_times(n,k);
-
   printf("# of processes: %d first 20 arrive times:\n", arrival_times.size);
   heap copy = clone(arrival_times);
   for(int i = 0; i < 20;i++)
