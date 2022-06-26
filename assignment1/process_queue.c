@@ -43,7 +43,7 @@ ProcessNode* dequeue(ProcessQueue* queue) {
     queue -> head -> next = deleted -> next;
     queue -> size--;
     if(queue -> tail == deleted)
-        printf("We have reached the tail");
+        printf("We have reached the tail\n");
         queue -> tail = queue -> head;
 
     free(deleted);
@@ -58,6 +58,7 @@ void enqueue(ProcessQueue* queue, ProcessNode* item){
     queue -> tail -> next -> value = item;
     queue -> tail = queue -> tail -> next;
     queue -> size++;
+    printf("added process to the queue. The size of the queue is now %d\n", queue->size);
 }
 
 ProcessNode* front(ProcessQueue* queue) {

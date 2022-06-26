@@ -1,5 +1,8 @@
 #include <math.h>
 #include <time.h>
+#include "pa1.h"
+#include "stdio.h"
+
 #define frand() (rand()/(double)RAND_MAX)
 #define nrand() (sqrt(-2*log(frand()))*cos(2*M_PI*frand()))
 heap generate_arrival_times(int n, int k){
@@ -24,7 +27,28 @@ int main(int argc, char** argv) {
     else
       continue;
   }
+ 
   double v = d/4.0;
+  int nk[4][2] = {{100,1000 },{500,10000},{500,5000},{1000,10000}};
+  FILE* fp;
+
+for(int i = 0; i < 4; i++){
+ 
+  if(i == 0){
+    fp = fopen("FIFO1.csv", "w");
+  } else if(i == 1){
+    fp = fopen("FIFO2.csv", "w");
+  } else if(i == 2){
+    fp = fopen("FIFO3.csv", "w");
+  } else {
+    fp = fopen("FIFO4.csv", "w");
+  }
+  n = nk[i][0];
+  k = nk[i][1];
+  fprintf(fp,"d, d/ATT\n");
+
+  for(d = k/n; d <= 25*(k/n); d += k/n){
+
   //CLA Handling
   printf("CLA Handling!\n");
   heap arrival_times = generate_arrival_times(n,k);
@@ -68,17 +92,11 @@ int main(int argc, char** argv) {
   }
   printf("FIFO Algorithm for (n,k)=(%d,%d): ATT= %.3f, d= %d, d/ATT= %.3f\n", n, k, att/n, d, d*n/att);
 
-  FILE *fp = fopen("FIFO.csv","r");
 
-  if (fp != NULL) {
-    fp = fopen("FIFO.csv", "a");
-    fprintf(fp,"%d, %.3f\n", d, d*n/att);
-  } else {
-    fp = fopen("FIFO.csv", "a");
-    fprintf(fp,"d, d/ATT\n");
-    fprintf(fp,"%d, %.3f\n", d, d*n/att);
+  fprintf(fp,"%d, %.3f\n", d, d*n/att);
+ 
   }
-  fclose(fp);
+   fclose(fp);
 
   return 0;
 }

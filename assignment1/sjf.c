@@ -1,20 +1,13 @@
-#include"pa1.h"
 #include <math.h>
 #include <time.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include "sjfheap.h"
-
-#define frand() (rand()/(double)RAND_MAX)
-#define nrand() (sqrt(-2*log(frand()))*cos(2*M_PI*frand()))
-
-sjfheap generate_arrival_times(int n, int k){
-  sjfheap h = create_heap(n);
-  for(int i = 0; i < n;i++)
-    min_insert(&h, frand()*k);
-  return h;
-}
+#include "utils.h"
+#include "process.h"
+#include "process_queue.h"
 
 int main(int argc, char** argv) {
-   srand(time(NULL));
   int n = 100;
   int k = 1000;
   int d = k/n;
@@ -29,62 +22,103 @@ int main(int argc, char** argv) {
       continue;
   }
 
-  double v = d/4.0;
+  int nk[4][2] = {{100,1000 },{500,10000},{500,5000},{1000,10000}};
+
   //CLA Handling
-  printf("CLA Handling!\n");
-  sjfheap arrival_times = generate_arrival_times(n,k);
-  printf("# of processes: %d first 20 arrive times:\n", arrival_times.size);
-  sjfheap copy = clone(arrival_times);
-  for(int i = 0; i < 20;i++)
-    printf("%d\t", min_delete(&copy));
-  putchar('\n');
-  //SJF requires a queue
-  lnklst_queue queue = create_queue2();
-  int t = 0;//time of my simultor
-  double att = 0.0;//keeps track of TTs sum
-  process * current = NULL;
-  while(!current || t < k || !is_empty2(queue)){
-    while(t == peek(&arrival_times)){//new process arrives
-      process p;
-      p.arrival_time = t;
-      p.remaining_time = p.burst_time = (int)round(nrand()*v + d);
-      p.tt = 0;
-      p.priority_level = rand()%10 + 1;
-      enqueue2(&queue, p);
-      min_delete(&arrival_times);
-      printf("t=%d: a new process admitted, bt = %d\n", t, p.burst_time);
-    }
-    if(current == NULL && !is_empty2(queue)){
-      current = (process*)malloc(sizeof(process));
-      *current = dequeue2(&queue);
-    }
-    if(current != NULL){
-      current->remaining_time--;
-      if(current->remaining_time == 0){
-        current->tt = (t+1) - current->arrival_time;//termination-arrival
-        printf("t=%d: a process with arrival time %d and bt %d got terminated with TT = %d\n", t+1, current->arrival_time, current->burst_time, current->tt);
-        att += current->tt;        
-        free(current);
-        current = NULL;
-      }
-    }
-    t++;
+  FILE* fp;
+for(int i = 0; i < 4; i++){
+ 
+  if(i == 0){
+    fp = fopen("SJF1.csv", "w");
+  } else if(i == 1){
+    fp = fopen("SJF2.csv", "w");
+  }else if(i == 2){
+    fp = fopen("SJF3.csv", "w");
+  }  else {
+    fp = fopen("SJF4.csv", "w");
   }
-  printf("SJF Algorithm for (n,k)=(%d,%d): ATT= %.3f, d= %d, d/ATT= %.3f\n", n, k, att/n, d, d*n/att);
+  n = nk[i][0];
+  k = nk[i][1];
+  fprintf(fp,"d, d/ATT\n");
 
-  FILE *fp = fopen("SJF.csv","r");
+  for(d = k/n; d <= 25*(k/n); d += k/n){
 
-  FILE *fp = fopen("SJF.csv","r");
 
-  if (fp != NULL) {
-    fp = fopen("SJF.csv", "a");
-    fprintf(fp,"%d, %.3f\n", d, d*n/att);
-  } else {
-    fp = fopen("SJF.csv", "a");
-    fprintf(fp,"d, d/ATT\n");
-    fprintf(fp,"%d, %.3f\n", d, d*n/att);
+
+    int * totalCPUTimes= malloc(n * sizeof(int));
+    int * arrivalTimes = malloc(n * sizeof(int));
+    ProcessNode* nodes = malloc(n * sizeof(struct ProcessNode));
+    ProcessQueue newNodes = createProcessQueue();
+    ProcessQueue terminatedNodes = createProcessQueue();
+    sjfheap scheduler = create_heap(n);
+    double v = d/4;
+
+
+
+      //uniform distribution of arrival times
+
+    createUniformlyDistributedList(arrivalTimes, n, 0, k);
+    printf("created arrival times for the processes\n");
+
+    //normal distribution of total cpu time
+    createNormallyDistributedList(totalCPUTimes, n, d, v);
+    printf("created cpu times times for the processes%s\n", "");
+
+    for(int i = 0; i < n; i++) {
+        createNode(&nodes[i], i+1, arrivalTimes[i], 0, totalCPUTimes[i], totalCPUTimes[i], 1, 1);
+    }
+    printf("created process data structures %s\n", "");
+    
+    sortProcesses(nodes, n);
+
+    for(int i = 0; i < n; i++){
+      printf("pid: %d\t arrivalTime: %d\t totalCPUTime: %d\t\n", nodes[i].pid, nodes[i].arrivalTime, nodes[i].totalCpuTime);
+    }
+
+    printf("adding nodes to newNode queue\n");
+    for(int i = 0; i < n; i++){
+        enqueue(&newNodes, &nodes[i]);
+    }
+    printf("nodes added\n");
+    double attime = 0;
+    double terminated = 0;
+    int time = 0;
+    //
+    ProcessNode* current = (ProcessNode*)malloc(sizeof(ProcessNode)); 
+    printf("%d", current->pid);   
+
+    while(terminated < n){
+      
+      while(!isEmpty(newNodes) && front(&newNodes)->arrivalTime <= time){
+            printf("insert node into scheduler\n");
+            min_insert(&scheduler, front(&newNodes));
+            dequeue(&newNodes);
+        }
+      
+      if(current->pid == 0 && !is_empty(scheduler)){
+        current = delete(&scheduler);
+      }
+
+      if(current != NULL){
+        current->remainingTime--;
+      }
+
+      if(current->remainingTime == 0){
+          int tt = (time+1) - current->arrivalTime;//termination-arrival
+          printf("t=%d: a process with arrival time %d and bt %d got terminated with TT = %d\n", time+1, current->arrivalTime, current->totalCpuTime, tt);
+          attime += tt;      
+          current =(ProcessNode*)malloc(sizeof(ProcessNode));
+          terminated++;
+      }
+        time++;
+    }
+  
+  printf("SJF Algorithm for (n,k)=(%d,%d): ATT= %.3f, d= %d, d/ATT= %.3f\n", n, k, attime/n, d, d*n/attime);
+  fprintf(fp,"%d, %.3f\n", d, d*n/attime);
+
   }
   fclose(fp);
+}
 
   return 0;
 }

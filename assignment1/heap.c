@@ -25,6 +25,7 @@ int is_full(heap h){
 void clear(heap* h){
   h->size = 0;
 }
+
 //heapify or max-percolate-down is essential for delete root operation
 void max_percolate_down(heap h, int node){//log(n) operation
   //fixes the max-heap property violated by node!
