@@ -58,6 +58,12 @@ Clement Bowe
 20:00 Meeting Begins
 20:01 Status updates on tasks
 20:43 Begin cleaning up code and assessing for errors in assigned tasks
-20:55 Begin Debugging
-21:25 Begin compiling info for the reports
-22:00 Meeting Adjurned
+20:55 flip the negative number into a positive number
+21:10 Next fit algorithm
+21:50 Need to account for cases when a new hole is merged from the left of the head since the head is constantly moving
+22:20 Best fit algorithm
+22:30 Basically same as worstfit but changing the sign.
+22:50 Created worstfit algorithm for filling holes
+23:00 Iterates through each block and searches for the one with the largest number of memory space available
+23:25 Begin compiling info for the reports
+23:50 Meeting Adjurned
