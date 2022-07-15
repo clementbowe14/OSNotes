@@ -71,17 +71,18 @@ int request(int* blocks, int* block_count, int* mem, int d, double v, int n){
     else{
       mem[pred+2] = succ;//current->prev->next = current->next
       mem[succ+1] = pred;//current->next->prev = current->prev 
-
+      head = succ;
     //   if(iterator == head){
     //     printf("block allocated was the head of the list at location %d the new head is now  %d \n", iterator, pred);
     //     head = pred;
     //   }
-      head = succ;
+
     }
     block_address = iterator;
   }else{//fill partially
+
+    head = iterator; 
     printf("Block at location %d will be filled partially to fulfill request.\n", iterator);
-    head = iterator;
     mem[iterator] += (size+2);
     //adding pos by neg to make it less negative
     new_size = -mem[iterator];
@@ -98,10 +99,11 @@ int request(int* blocks, int* block_count, int* mem, int d, double v, int n){
      mem[i] = 0;
   }
 
+  printf("Head is now located at %d\n", head);
   printf("New allocated block located at %d\n", block_address);
-  // for(int i = 0; i < n; i++){
-  //   printf("%d  ", mem[i]);
-  // }
+//   for(int i = 0; i < n; i++){
+//     printf("%d  ", mem[i]);
+//   }
   printf("\n");
 
   return 1;//successful
@@ -191,10 +193,7 @@ void release(int* blocks, int* block_count, int* mem, int n){
 
     next_end = next + (-mem[next]) + 1;
     end = block_start + (-new_size) + 1;
-    
-    if(next == head) {
-        block_start = head;
-    }
+
     //remove values from former end
     mem[block_end] = 0;
     mem[next] = 0;
@@ -207,6 +206,9 @@ void release(int* blocks, int* block_count, int* mem, int n){
     mem[mem[next + 2] + 1] = block_start;
     
     block_end = end;
+    if(head == next){
+        head = block_start;
+    }
     mem[block_start] = new_size;
     mem[block_end] = new_size;
     printf("start and end of the block %d %d\n", block_start, block_end);
@@ -230,7 +232,7 @@ void release(int* blocks, int* block_count, int* mem, int n){
     printf("merging holes (%d, %d)\n", prev_start, block_start);
     new_size = mem[block_start] + mem[prev_start] - 2;
 
-    printf("New size of hole is now %d\n", -new_size);
+    printf("New size of hole is now %d\n", new_size);
     mem[prev] = 0;
     mem[block_start] = 0;
     mem[block_end] = 0;
@@ -269,14 +271,14 @@ void release(int* blocks, int* block_count, int* mem, int n){
     //   mem[i] = 0;
     // }
 
-  // for(int i = block_start; i <= block_end; i++){
-  //   printf("%d ", mem[i]);
-  // }
+//   for(int i = block_start; i <= block_end; i++){
+//     printf("%d ", mem[i]);
+//   }
   //   printf("\n");
 
-  // for(int i = 0; i < n; i++){
-  //   printf("%d ", mem[i]);
-  // }
+//   for(int i = 0; i < n; i++){
+//     printf("%d ", mem[i]);
+//   }
   printf("\n");
   printf("The new hole created is at location %d with previous value %d and next value %d\n", block_start, mem[block_start+1], mem[block_start+2]);
 }
