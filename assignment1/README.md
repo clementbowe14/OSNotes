@@ -4,6 +4,8 @@
 Vincent Ledesma PID: 3020421
 Clement Bowe PID: 5442372
 
+
+
 ## Meetings
 
 Meeting 1 log:
