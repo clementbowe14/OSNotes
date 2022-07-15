@@ -8,6 +8,7 @@
 
 double avg_utilization = 0;
 int number_of_examined_holes = 0;
+int requests = 0;
 int head = 0;//head of the linked list of holes
 
 void initialize(int n, int d, int v, int** mem, int**blocks){
@@ -38,7 +39,7 @@ int nrand_gen(int d, double v, int n){
 int request(int* blocks, int* block_count, int* mem, int d, double v, int n){
   if(head == -1)//no hole is found!
     return 0;
-
+  requests++;
   int size = nrand_gen(d, v, n);
   int iterator = head, pred, succ, new_size, block_address;
   printf("searching for request of size %d\n", size);
@@ -124,7 +125,7 @@ void release(int* blocks, int* block_count, int* mem, int n){
   int new_size = 0;
   int end = 0;
 
-   printf("releasing block at location (address) %d \n", blocks[to_be_released]);
+  printf("releasing block at location (address) %d \n", blocks[to_be_released]);
 
   //remove an integer at index to_be_released from blocks array...
   blocks[to_be_released] = blocks[(*block_count)-1];
@@ -267,14 +268,14 @@ void release(int* blocks, int* block_count, int* mem, int n){
     }
   }
 
-    // for(int i = block_start + 3; i < block_end; i++){
-    //   mem[i] = 0;
-    // }
+// for(int i = block_start + 3; i < block_end; i++){
+//   mem[i] = 0;
+// }
 
 //   for(int i = block_start; i <= block_end; i++){
 //     printf("%d ", mem[i]);
 //   }
-  //   printf("\n");
+//   printf("\n");
 
 //   for(int i = 0; i < n; i++){
 //     printf("%d ", mem[i]);
@@ -331,5 +332,6 @@ int main(int argc, char** argv) {
     release(blocks,&block_count,mem, n);
   }
   printf("avg utilization is %.3f", avg_utilization);
+  printf("avg number of holes examined is %.3f \n", (double) number_of_examined_holes / requests);
   return 0;
 }
