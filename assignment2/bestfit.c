@@ -62,7 +62,7 @@ int request(int* blocks, int* block_count, int* mem, int d, double v, int n){
     printf("Iterator is currently at location %d with value %d\n", iterator, -mem[iterator]);
     number_of_examined_holes++;
     iterator = mem[iterator + 2];//iterator = iterator->next
-    if(size <= -mem[iterator] && (ans == -1 || -mem[iterator] < -mem[ans])) {
+    if(size <= -mem[iterator] && (ans == -1 || (-mem[iterator] < -mem[ans]))) {
       ans = iterator;
     }
     if(head == iterator){
