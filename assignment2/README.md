@@ -6,6 +6,14 @@ Panther ID
 3020421
 5442372
 
+## Running memory allocation programs
+
+- use "make firstfit" to build executable for firstfit.c (first)
+- use "make nextfit" to build executable for nextfit.c (next)
+- use "make bestfit" to build executable for bestfit.c (best)
+- use "make worstfit" to build executable for worstfit.c (worst)
+
+
 Things to be completed
 
 - first fit - Clement Bowe

@@ -166,7 +166,7 @@ void release(int* blocks, int* block_count, int* mem, int n){
     mem[prev_start + 2] = mem[next + 2];
     mem[mem[next+2] + 1] = prev_start;
 
-    if(head == block_start){
+    if(head == block_start || next == block_start){
       head = prev_start;
     }
 
@@ -200,6 +200,10 @@ void release(int* blocks, int* block_count, int* mem, int n){
     mem[mem[next + 1] + 2] = block_start;
     mem[block_start + 2] = mem[next + 2];
     mem[mem[next + 2] + 1] = block_start;
+
+    if(next == head){
+      head = block_start;
+    }
     
     block_end = end;
     mem[block_start] = new_size;

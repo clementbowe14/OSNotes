@@ -1,14 +1,16 @@
 CC=gcc
-BINARY=bin
+BINARY=bin first worst best next
 FIRST=first
 WORST=worst
+BEST=best
+NEXT=next
 INCDIRS=-I.
-CFILES=nextfit.c
-OBJECTS=nextfit.o
+CFILES=bestfit.c
+OBJECTS=bestfit.o firstfit.o worstfit.o nextfit.o
 OPT=-O0
 TXT=data.txt
 CFLAGS=-WALL -Wextra -g $(INCDIRS) $(OPT)
-CSV=uniformhist.csv normalhist.csv normalrandomhist.csv normaldistdividenormalrandom.csv specialDistributionHistogram.csv
+
 all: $(BINARY)
 
 $(BINARY): $(OBJECTS)
@@ -21,4 +23,19 @@ $(BINARY): $(OBJECTS)
 
 .PHONY: firstfit
 firstfit:
-	$(CC) -o $(WORST) 
+	$(CC) -o $(FIRST) firstfit.c
+
+.PHONY: worstfit
+worstfit:
+	$(CC) -o $(WORST) worstfit.c
+
+.PHONY: bestfit
+bestfit:
+	$(CC) -o $(BEST) bestfit.c
+
+PHONY: nextfit
+nextfit:
+	$(CC) -o $(NEXT) nextfit.c
+
+clean:
+	rm -rf $(BINARY) $(OBJECTS)
