@@ -1,0 +1,16 @@
+{
+    "files.associations": {
+        "__bit_reference": "c",
+        "__split_buffer": "c",
+        "vector": "c",
+        "string": "c",
+        "__node_handle": "cpp",
+        "istream": "c",
+        "limits.h": "c",
+        "process.h": "c",
+        "srtheap.h": "c",
+        "process_queue.h": "c",
+        "stdio.h": "c",
+        "stdlib.h": "c"
+    }
+}
