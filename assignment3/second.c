@@ -10,7 +10,7 @@ int locate(int* frames, int size, int page_no){
       return i;
   return -1;
 }
-int fifo(int* ref_str, int size, int limit){
+int optimal(int* ref_str, int size, int limit){
   //size is the # of frames allocated for the process
   //limit is the max # of cells that we look ahead in the RS to implement the optimal algorithm
   //initialize
@@ -99,7 +99,7 @@ int main(int argc, char** argv) {
         locus_position = (locus_position + 1)%(P-e+1);
     }
   }
-  int optimal_page_fault = fifo(ref_str, FRAME_NO, e * m);
+  int optimal_page_fault = optimal(ref_str, FRAME_NO, e * m);
   printf("Optimal page replacement causes %d page faults\n", optimal_page_fault);
   return 0;
 }
