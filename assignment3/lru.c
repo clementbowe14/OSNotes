@@ -10,9 +10,9 @@ int locate(int* frames, int size, int page_no){
       return i;
   return -1;
 }
-int optimal(int* ref_str, int size, int limit){
+int lru(int* ref_str, int size, int limit){
   //size is the # of frames allocated for the process
-  //limit is the max # of cells that we look ahead in the RS to implement the optimal algorithm
+  //limit is the max # of cells that we look ahead in the RS to implement the LRU algorithm
   //initialize
   int page_faults = size;
   int frames[size], i, cur, page_no, frame_no;
@@ -33,13 +33,15 @@ int optimal(int* ref_str, int size, int limit){
     frame_no = locate(frames, size, page_no);
     if(frame_no != -1)//already exists
       continue;
+      
     //look at ref_str[cur+1:cur+limit] to see which one has not been referred to the longest in the future
     page_faults++;
     //This is the very first line that is differnet in other algorithms
+
     unsigned unused = (1<<size) - 1;
     int victim;
-    for(int k = 1; k <= limit && unused && cur + k < 1000000;k++){
-      victim = locate(frames, size, ref_str[cur + k]);
+    for(int k = 1; k <= limit && unused && cur - k >= 0;k++){
+      victim = locate(frames, size, ref_str[cur - k]);
       if(victim == -1)
         continue;
       unused &= ~(1<<victim);
@@ -99,8 +101,8 @@ int main(int argc, char** argv) {
         locus_position = (locus_position + 1)%(P-e+1);
     }
   }
-  int optimal_page_fault = optimal(ref_str, FRAME_NO, e * m);
-  printf("Optimal page replacement causes %d page faults\n", optimal_page_fault);
+  int lru_page_fault = lru(ref_str, FRAME_NO, e * m);
+  printf("LRU page replacement causes %d page faults\n", lru_page_fault);
   return 0;
 }
 
