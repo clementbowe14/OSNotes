@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
-#include <pa3.h>
+#include "pa3.h"
 #define FRAME_NO 10
 #define lrand() rand()*RAND_MAX + rand()
 int locate(int* frames, int size, int page_no){
@@ -44,11 +44,7 @@ int fifo(int* ref_str, int size, int limit){
   return page_faults;
 }
 
-struct node
-{
-  int data;
-  struct node* next;
-};
+
 struct node* front = NULL;
 struct node* rear = NULL;
 
@@ -56,7 +52,7 @@ void enqueue2(int val)
 {
   struct node* ptr;
   ptr = (struct node*)malloc(sizeof (struct node));
-  ptr -> data = val;
+  ptr -> value = val;
   ptr -> next = NULL;
   
   if ((front == NULL) && (rear == NULL)) {
@@ -73,7 +69,7 @@ int dequeue2() {
     return -1;
   } else {
     struct node* temp = front;
-    int temp_val = temp->data;
+    int temp_val = temp->value;
     front = front->next;
     free(temp);
     return temp_val;

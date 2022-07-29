@@ -75,7 +75,6 @@ int second(int* ref_str, int size, int limit){
     
     int index = dequeue2();
     while(mod[index] == 1){
-      printf("getting second chance");
       mod[index]--;
       enqueue2(index);
       index = dequeue2();
