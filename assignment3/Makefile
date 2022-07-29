@@ -11,15 +11,15 @@ optimal:
 
 .PHONY: fifo
 fifo:
-	$(CC) -o $(FIFO) optimal.c
+	$(CC) -o $(FIFO) fifo.c
 
 .PHONY: lru
 lru:
-	$(CC) -o $(LRU) optimal.c
+	$(CC) -o $(LRU) lru.c
 
 .PHONY: second
 second:
-	$(CC) -o $(SECOND) optimal.c
+	$(CC) -o $(SECOND) second.c
 
 clean:
 	rm -rf $(BINARY)
